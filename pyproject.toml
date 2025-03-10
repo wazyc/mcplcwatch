@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcplcwatch"
+version = "0.1.0"
+description = "A Python library for reading, writing, and monitoring PLC data using MC protocol"
+readme = "README.md"
+authors = [
+    {name = "wazyc", email = "35793061+wazyc@users.noreply.github.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Manufacturing",
+    "Topic :: System :: Hardware :: Hardware Drivers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords = ["plc", "mc protocol", "mitsubishi", "industrial", "automation", "scada", "iot"]
+requires-python = ">=3.6"
+
+[project.urls]
+"Homepage" = "https://github.com/wazyc/mcplcwatch"
+"Bug Tracker" = "https://github.com/wazyc/mcplcwatch/issues" 

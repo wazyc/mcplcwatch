@@ -1,0 +1,13 @@
+include LICENSE
+include README.md
+include pyproject.toml
+
+recursive-include mcplcwatch *.py
+recursive-include tests *.py
+recursive-include examples *.py
+
+exclude tests/*.pyc
+exclude examples/*.pyc
+exclude *.pyc
+exclude .gitignore
+exclude .cursorignore 
