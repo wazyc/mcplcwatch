@@ -174,7 +174,8 @@ class PlcClient:
                     0xC059: "Read/write request with invalid specification of data count",
                     0xC05B: "Read/write request with invalid specification of stored data",
                     0xC05C: "Read/write request with invalid specification of block",
-                    0xC06B: "Request when CPU is in RUN mode and writing is disabled"
+                    0xC06B: "Request when CPU is in RUN mode and writing is disabled",
+                    0x0055: "Write operation not allowed. PLC is in write-protected mode." # 書き込み禁止モード
                 }
                 error_msg = error_messages.get(end_code, f"Unknown error code: 0x{end_code:04X}")
                 raise PlcCommunicationError(f"PLC returned error: {error_msg} (0x{end_code:04X})")

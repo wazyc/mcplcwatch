@@ -1,3 +1,33 @@
+Metadata-Version: 2.2
+Name: mcplcwatch
+Version: 0.1.0
+Summary: A Python library for reading, writing, and monitoring PLC data using MC protocol
+Home-page: https://github.com/user/mcplcwatch
+Author: wazyc
+Author-email: wazyc <35793061+wazyc@users.noreply.github.com>
+License: MIT
+Project-URL: Homepage, https://github.com/wazyc/mcplcwatch
+Project-URL: Bug Tracker, https://github.com/wazyc/mcplcwatch/issues
+Keywords: plc,mc protocol,mitsubishi,industrial,automation,scada,iot
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Manufacturing
+Classifier: Topic :: System :: Hardware :: Hardware Drivers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-python
+
 # mcplcwatch
 
 MCプロトコルを使用してPLCのデータを読み書き、または監視するPythonライブラリです。    
@@ -136,31 +166,6 @@ This library supports the following MC protocol frame types:
 フレームタイプの選択は、PLCの設定や接続環境によって異なります。一般的に、単一のPLCに直接接続する場合は3Eフレーム、
 複数のネットワークを経由する場合やGOT経由でPLCに接続する場合は4Eフレームを使用します。  
 The choice of frame type depends on the PLC configuration and connection environment. Generally, 3E frame is used when connecting directly to a single PLC, while 4E frame is used when connecting through multiple networks or through a GOT.
-
-## テスト | Testing
-
-このライブラリには単体テスト、モックテスト、統合テストが含まれています。テストを実行するには以下のコマンドを使用します：  
-This library includes unit tests, mock tests, and integration tests. To run the tests, use the following commands:
-
-```bash
-# 単体テストとモックテストを実行（統合テストは含まれません）
-# Run unit tests and mock tests (integration tests not included)
-python run_tests.py
-
-# 統合テストのみ実行
-# Run only integration tests
-python run_tests.py --integration
-
-# 読み取り専用モードで統合テストを実行（書き込みテストをスキップ）
-# Run integration tests in read-only mode (skips write tests)
-python run_tests.py --integration --readonly
-```
-
-`--readonly`オプションは、PLC側で書き込み禁止設定がされている環境でテストを実行する場合に便利です。  
-The `--readonly` option is useful when running tests in an environment where writing to the PLC is restricted.
-
-詳細なテスト実行方法については `tests/README.md` を参照してください。  
-For more detailed testing instructions, please refer to `tests/README.md`.
 
 ## ライセンス | License
 

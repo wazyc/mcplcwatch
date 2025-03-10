@@ -45,6 +45,10 @@ python run_tests.py --mock
 # Run only integration tests
 python run_tests.py --integration
 
+# 読み取り専用モードで統合テストを実行（書き込みテストをスキップ）
+# Run integration tests in read-only mode (skips write tests)
+python run_tests.py --integration --readonly
+
 # 詳細な出力で実行
 # Run with verbose output
 python run_tests.py --verbose
@@ -108,4 +112,23 @@ coverage html
 - 統合テストは `--integration` オプションを指定した場合のみ実行されます。  
   Integration tests are only run when the `--integration` option is specified.
 - PLCが接続されていない場合、統合テストは自動的にスキップされます。  
-  If no PLC is connected, integration tests are automatically skipped. 
+  If no PLC is connected, integration tests are automatically skipped.
+
+### --readonlyオプションについて | About the --readonly Option
+
+`--readonly`オプションは、PLCへの書き込み操作を行うテストをスキップします。PLC側で書き込みが禁止されている環境や、
+現在動作中のPLCの値を変更したくない場合に使用してください。  
+The `--readonly` option skips tests that perform write operations to the PLC. Use this option in environments where writing to the PLC is restricted, or when you don't want to change the values of a PLC that is currently in operation.
+
+このオプションを指定すると、以下のテストがスキップされます：  
+When this option is specified, the following tests will be skipped:
+
+- `test_device_write`: デバイスへの書き込みテスト  
+  `test_device_write`: Tests for writing to devices
+- `test_string_operations`: 文字列操作（書き込み含む）のテスト  
+  `test_string_operations`: Tests for string operations (including writing)
+- `test_monitor`: モニター機能テスト（値の変更が含まれる）  
+  `test_monitor`: Tests for monitor functionality (which includes changing values)
+
+デバイスの読み取りテスト（`test_device_read`）は、PLCの現在の値を使用して実行されます。  
+Device reading tests (`test_device_read`) will still run using the current values in the PLC. 

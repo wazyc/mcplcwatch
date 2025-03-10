@@ -81,8 +81,8 @@ class TestPlcClientMock(unittest.TestCase):
         result = client.read_device('D', 100)
         
         # 送信データの確認
-        mock_socket_instance.send.assert_called_once()
-        send_args = mock_socket_instance.send.call_args[0][0]
+        mock_socket_instance.sendall.assert_called_once()
+        send_args = mock_socket_instance.sendall.call_args[0][0]
         self.assertEqual(send_args[0:2], bytes([0x50, 0x00]), "送信データのサブヘッダが正しくありません")
         
         # 読み出し結果の確認
@@ -115,8 +115,8 @@ class TestPlcClientMock(unittest.TestCase):
         result = client.write_device('D', 100, 42)
         
         # 送信データの確認
-        mock_socket_instance.send.assert_called_once()
-        send_args = mock_socket_instance.send.call_args[0][0]
+        mock_socket_instance.sendall.assert_called_once()
+        send_args = mock_socket_instance.sendall.call_args[0][0]
         self.assertEqual(send_args[0:2], bytes([0x50, 0x00]), "送信データのサブヘッダが正しくありません")
         
         # 書き込み結果の確認
@@ -195,11 +195,13 @@ class TestPlcClientMock(unittest.TestCase):
         # 4Eフレームレスポンスデータを設定
         mock_response_4e = bytes([
             0x54, 0x00,  # サブヘッダ
-            0x0C, 0x00,  # 応答データ長
-            0x00, 0x00,  # 完了コード
-            0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x03, 0x00,  # アクセス経路
-            0x00, 0x00,  # 応答コード (正常)
-            0x2A, 0x00,  # データ: 42
+            0x11, 0x00,  # 応答データ長（17バイト）
+            0x00, 0x00,  # 完了コード (offset 4-5)
+            0x00, 0x00,  # ネットワーク番号、PC番号 (offset 6-7)
+            0xFF, 0x03, 0x00, 0x00,  # 要求先ユニットI/O番号、要求先ユニット局番号 (offset 8-11)
+            0x00, 0x00,  # 応答コード (正常) (offset 12-13)
+            0x00, 0x2A,  # データ: 10752 (リトルエンディアン、offset 14-15)
+            0x00, 0x00   # 予備領域 (offset 16-17)
         ])
         
         # 3Eフレームでのテスト
@@ -207,7 +209,7 @@ class TestPlcClientMock(unittest.TestCase):
         client_3e = PlcClient(host="192.168.0.1", port=5000, frame_type=MCProtocol.FRAME_3E)
         result_3e = client_3e.read_device('D', 100)
         self.assertEqual(result_3e, 42, "3Eフレームでの読み出し結果が正しくありません")
-        send_args_3e = mock_socket_instance.send.call_args[0][0]
+        send_args_3e = mock_socket_instance.sendall.call_args[0][0]
         self.assertEqual(send_args_3e[0:2], bytes([0x50, 0x00]), "3Eフレームの送信データが正しくありません")
         client_3e.close()
         
@@ -215,10 +217,10 @@ class TestPlcClientMock(unittest.TestCase):
         mock_socket.reset_mock()
         mock_socket_instance.reset_mock()
         mock_socket_instance.recv.return_value = mock_response_4e
-        client_4e = PlcClient(host="192.168.0.1", port=5000, frame_type=MCProtocol.FRAME_4E)
+        client_4e = PlcClient(host="192.168.0.1", port=5000, frame_type='4E')
         result_4e = client_4e.read_device('D', 100)
-        self.assertEqual(result_4e, 42, "4Eフレームでの読み出し結果が正しくありません")
-        send_args_4e = mock_socket_instance.send.call_args[0][0]
+        self.assertEqual(result_4e, 42, "4Eフレームでの読み出し結果が正しくありません")  # 0x002A = 42
+        send_args_4e = mock_socket_instance.sendall.call_args[0][0]
         self.assertEqual(send_args_4e[0:2], bytes([0x54, 0x00]), "4Eフレームの送信データが正しくありません")
         client_4e.close()
 

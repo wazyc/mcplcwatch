@@ -1,0 +1,14 @@
+[distutils]
+index-servers =
+  pypi
+  testpypi
+
+[pypi]
+repository = https://upload.pypi.org/legacy/
+username = wazyc
+password = rtyfghvbnpp0
+
+[testpypi]
+repository = https://test.pypi.org/legacy/
+username = __token__
+password = pypi-AgENdGVzdC5weXBpLm9yZwIkYjQzMTA4MjktNzQ0NC00NGMyLWFiZDQtODg3ZDQ3Y2JiZjc3AAJEeyJwZXJtaXNzaW9ucyI6ICJ1c2VyIiwgInZlcnNpb24iOiAxLCAic3ViIjogIndheiJ9AAAGIHtOqpjCqv1cQD0tBGZh6V_Pj7E5EXiPHI13TZsJNvYG 
